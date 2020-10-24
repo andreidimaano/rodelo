@@ -1,0 +1,24 @@
+{
+  "name": "rodelo",
+  "version": "1.0.0",
+  "description": "Pomodoro Discord Bot",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreidimaano/rodelo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreidimaano/rodelo/issues"
+  },
+  "homepage": "https://github.com/andreidimaano/rodelo#readme",
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "dotenv": "^8.2.0"
+  }
+}
