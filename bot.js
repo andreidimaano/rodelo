@@ -23,7 +23,9 @@ client.on('message', async (message) => {
     
     //send message
     if(isValidCommand(message, 'pomodoro')) {
-        let botMessage = await startPomodoro(message, currentRole).catch(err => {
+        let timer = parseInt(message.content.substring(10));
+
+        let botMessage = await startPomodoro(message, currentRole, timer).catch(err => {
             console.log(err);
             message.channel.send("Oops! something went wrong");
         });
@@ -39,7 +41,7 @@ client.on('message', async (message) => {
             setTimeout(async () => {
                 let newMessage = await deleteRole(message, currentRole);
                 message.channel.send(newMessage);
-            }, 5000)
+            }, timer * 1000)
         } else {
             //return error message
             message.channel.send(confirmationMessage);
