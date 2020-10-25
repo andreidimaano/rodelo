@@ -33,8 +33,7 @@ client.on('message', (message) => {
                 return;
             }
 
-            if(
-                role.permissions.has('ADMINISTRATOR') || 
+            if(role.permissions.has('ADMINISTRATOR') || 
                 role.permissions.has('KICK_MEMBERS') ||
                 role.permissions.has('MANAGE_GUILD') ||
                 role.permissions.has('MANAGE_CHANNELS')){
@@ -49,8 +48,31 @@ client.on('message', (message) => {
                     })
             }
                 
+        } else {
+            message.channel.send("Role not found!");
         }
-        else {
+    }
+
+    //delete role
+    else if(isValidCommand(message, 'delrole')){
+        let args = message.content.toLowerCase().substring(9);
+        let { cache } = message.guild.roles;
+        let role = cache.find(role => role.name.toLowerCase() === args);
+
+        if(role) {
+            if(!message.member.roles.cache.has(role.id)) {
+                message.channel.send("You do not have this role!");
+                return;
+            } else {
+                message.member.roles.remove(role)
+                    .then(() => message.channel.send('You were removed from this role!'))
+                    .catch(err => {
+                        console.log(err);
+                        message.channel.send("Oops! something went wrong");
+                    })
+            }
+                
+        } else {
             message.channel.send("Role not found!");
         }
     }
