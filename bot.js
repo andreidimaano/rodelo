@@ -41,7 +41,7 @@ client.on('message', async (message) => {
             setTimeout(async () => {
                 let newMessage = await deleteRole(message, currentRole);
                 message.channel.send(newMessage);
-            }, timer * 1000)
+            }, timer * 60000)
         } else {
             //return error message
             message.channel.send(confirmationMessage);
@@ -55,6 +55,10 @@ client.on('message', async (message) => {
 
         currentRole = newRole;
         console.log(`current role: ${currentRole}`);
+    }
+
+    else if(isValidCommand(message, 'rodelohelp')) {
+        message.channel.send(`${message.author} \n\n:sunglasses: Rodelo to the rescue!\n \`\`\`!rodelohelp : list of commands\n\n !pomodoro [x] : set pomodoro for x amount of minutes\n\n !setrole : set the server role for the pomodoro, I recommened creating a "studying" role\`\`\``);
     }
 });
 
