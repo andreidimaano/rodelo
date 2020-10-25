@@ -5,6 +5,10 @@ let PREFIX = process.env.PREFIX;
 let { addRole } = require('./components/addRole'); 
 let { deleteRole } = require('./components/deleteRole'); 
 let { startPomodoro } = require('./components/pomodoro'); 
+let currentRole = "studying";
+
+
+//if you want to set up a custom bot, needs a database to keep track of your role name.
 
 client.login(process.env.TOKEN);
 
@@ -19,30 +23,36 @@ client.on('message', async (message) => {
     
     //send message
     if(isValidCommand(message, 'pomodoro')) {
-        let confirmationMessage = await startPomodoro(message).catch(err => {
+        let botMessage = await startPomodoro(message, currentRole).catch(err => {
             console.log(err);
             message.channel.send("Oops! something went wrong");
         });
         
+        let { confirmationMessage, isValid } = botMessage;
+
+        if(isValid){
+        //sends study message
         message.channel.send(confirmationMessage);
+
+        //Delete Role
+        //Return study break message
+            setTimeout(async () => {
+                let newMessage = await deleteRole(message, currentRole);
+                message.channel.send(newMessage);
+            }, 5000)
+        } else {
+            //return error message
+            message.channel.send(confirmationMessage);
+        }
     }
 
-    //add role
-    else if(isValidCommand(message, 'addrole')){
-        let confirmationMessage = await addRole(message).catch(err => {
-            console.log(err);
-            message.channel.send("Oops! something went wrong");
-        });
-        message.channel.send(confirmationMessage);
-    }
+    //set role
+    else if(isValidCommand(message, 'setrole')) {
+        console.log(`previous role: ${currentRole}`);
+        let newRole = message.content.toLowerCase().substring(9);
 
-    //delete role
-    else if(isValidCommand(message, 'delrole')){
-        let confirmationMessage = await deleteRole(message).catch(err => {
-            console.log(err);
-            message.channel.send('Oops! something went wrong');
-        });
-        message.channel.send(confirmationMessage);
+        currentRole = newRole;
+        console.log(`current role: ${currentRole}`);
     }
 });
 

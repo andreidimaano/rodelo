@@ -1,7 +1,7 @@
 module.exports.deleteRole = deleteRole;
 
-async function deleteRole(message) {
-    let args = message.content.toLowerCase().substring(9);
+async function deleteRole(message, studyRole) {
+    let args = studyRole;
     let { cache } = message.guild.roles;
     let role = cache.find(role => role.name.toLowerCase() === args);
 
@@ -11,7 +11,7 @@ async function deleteRole(message) {
             return (`${message.author} You do not have the **${role.name}** role!`);
         } else {
             message.member.roles.remove(role);
-            return (`${message.author} Congrats on finishing a pomodoro session Have a good break! \n \`\`\`Many hours of studies and practice, achievement is practically a given \n-Rodelo Dimaano\`\`\``);
+            return (`${message.author} \n\n Congrats on finishing a \n\n :tomato: **pomodoro session** :tomato: \n\n Have a good break! \n \`\`\`Many hours of studies and practice, achievement is practically a given \n-Rodelo Dimaano\`\`\``);
         }
     } 
 }

@@ -1,6 +1,10 @@
+let {addRole} = require('./addRole');
+let { deleteRole } = require('./deleteRole');
+
 module.exports.startPomodoro = startPomodoro;
 
-async function startPomodoro(message) {
-    return (`${message.author} starting timer for 25 minutes, happy studying!`);
+async function startPomodoro(message, role) {
+    return await addRole(message, role);
 }
+
 
